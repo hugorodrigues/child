@@ -16,9 +16,9 @@ Minimalistic nodejs process manager.
 ```js
 var apacheTail = require('child')({
 	// Command to execute
-	command: '/bin/tail',
+	command: '/usr/bin/tail',
 	// [Optional] Command arguments (same as nodejs.org/api/child_process.html)
-	args: ['-f', '/var/log/apache/*'],
+	args: ['-f', '/var/log/apache2/access.log'],
 	// [Optional] Extra Options (same as nodejs.org/api/child_process.html)
 	options: [],
 	// [Optional] Auto restart?
@@ -36,19 +36,19 @@ var apacheTail = require('child')({
 })
 ```
 
-### .start()
+### .start(callback)
 ```js
-apacheTail.start()
+apacheTail.start(function(pid){ console.log('apacheTail is now up with pid: '+ pid) })
 ```
 
 ### .stop(callback, termSignal)
 ```js
-apacheTail.stop(function(){ console.log('apacheTail is now stopped') })
+apacheTail.stop(function(code){ console.log('apacheTail is now stopped') })
 ```
 
 ### .restart(callback, termSignal)
 ```js
-apacheTail.restart(function(){ console.log('apacheTail has restarted') })
+apacheTail.restart(function(code){ console.log('apacheTail has restarted') })
 ```
 
 
