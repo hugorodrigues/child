@@ -11,51 +11,42 @@ Minimalistic nodejs process manager.
 
 ## Api
 
-### Init
+### Constructor
 
 ```js
 var apacheTail = require('child')({
-
 	// Command to execute
 	command: '/bin/tail',
-
-	// [Optional] Command arguments
+	// [Optional] Command arguments (same as nodejs.org/api/child_process.html)
 	args: ['-f', '/var/log/apache/*'],
-
-	// [Optional] Extra Options
+	// [Optional] Extra Options (same as nodejs.org/api/child_process.html)
 	options: [],
-
 	// [Optional] Auto restart?
 	autoRestart: false,
-
 	// [Optional] Timeout beetwen restart's
 	restartTimeout: 200,
-
 	// [Optional] Callback when the process is Auto-restarted
 	cbRestart: function(data){ console.log('restart '+data)},
-
 	// [Optional] On Output
 	cbStdout: function(data){ console.log('out '+data)},
-
 	// [Optional] On Error
 	cbStderr: function(data){ console.log('err '+data)},
-
 	// [Optional] On Exit
 	cbClose: function(exitCode){ console.log('bye '+exitCode)},
 })
 ```
 
-### child.start()
+### .start()
 ```js
 apacheTail.start()
 ```
 
-### child.stop(callback, termSignal)
+### .stop(callback, termSignal)
 ```js
 apacheTail.stop(function(){ console.log('apacheTail is now stopped') })
 ```
 
-### child.restart(callback, termSignal)
+### .restart(callback, termSignal)
 ```js
 apacheTail.restart(function(){ console.log('apacheTail has restarted') })
 ```
