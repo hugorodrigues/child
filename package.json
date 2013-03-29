@@ -1,0 +1,24 @@
+{
+  "name": "child",
+  "version": "0.0.1",
+  "main": "child.js",
+  "description": "Minimalistic nodejs process manager. Similar to forever-monitor",
+
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hugorodrigues/child.git"
+  },
+
+  "keywords": [
+    "child",
+    "process",
+    "forever",
+    "init",
+    "run",
+    "spawn",
+    "processes"
+  ],
+  
+  "author": "Hugo Rodrigues",
+  "license": "MIT",
+}
