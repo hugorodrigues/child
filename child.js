@@ -20,7 +20,7 @@ module.exports = function(userOptions){
 			cbClose: userOptions.cbClose || function(data){},
 	}
 
-	obj.start = function() {
+	obj.start = function(cb) {
 		stopOrder = false;
 	  process = require('child_process').spawn(options.command, options.args, options.options);
 
@@ -47,6 +47,9 @@ module.exports = function(userOptions){
 				setTimeout(obj.start, options.restartTimeout)
 			}
 		})
+
+		if (cb)
+			cb(process.pid)
 
 	}
 
