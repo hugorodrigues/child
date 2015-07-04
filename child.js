@@ -8,7 +8,7 @@ module.exports = function(userOptions){
 	var options = {
 			command: userOptions.command || false,
 			args: userOptions.args || null,
-			options: userOptions.options || null,
+			options: userOptions.options || [],
 
 			autoRestart: userOptions.autoRestart || false,
 			restartTimeout: userOptions.restartTimeout || 200,
