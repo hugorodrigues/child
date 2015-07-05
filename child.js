@@ -1,36 +1,36 @@
-module.exports = function(userOptions){
+module.exports = function(userOptions) {
 
-	var obj={},
-			process={},
-			stopCb,
-			stopOrder = false
+	var obj = {},
+		process = {},
+		stopCb,
+		stopOrder = false
 
 	var options = {
-			command: userOptions.command || false,
-			args: userOptions.args || null,
-			options: userOptions.options || [],
+		command: userOptions.command || false,
+		args: userOptions.args || null,
+		options: userOptions.options || [],
 
-			autoRestart: userOptions.autoRestart || false,
-			restartTimeout: userOptions.restartTimeout || 200,
+		autoRestart: userOptions.autoRestart || false,
+		restartTimeout: userOptions.restartTimeout || 200,
 
-			cbRestart: userOptions.cbRestart || function(data){},
+		cbRestart: userOptions.cbRestart || function(data) {},
 
-			cbStdout: userOptions.cbStdout || null,
-			cbStderr: userOptions.cbStderr || null,
-			cbClose: userOptions.cbClose || function(data){},
+		cbStdout: userOptions.cbStdout || null,
+		cbStderr: userOptions.cbStderr || null,
+		cbClose: userOptions.cbClose || function(data) {},
 	}
 
 	obj.start = function(cb) {
 		stopOrder = false;
-	  process = require('child_process').spawn(options.command, options.args, options.options);
+		process = require('child_process').spawn(options.command, options.args, options.options);
 
-	  if (options.cbStdout)
+		if (options.cbStdout)
 			process.stdout.on('data', options.cbStdout)
 
-	  if (options.cbStderr)
+		if (options.cbStderr)
 			process.stderr.on('data', options.cbStderr)
-	
-		process.on('close', function (code) {
+
+		process.on('close', function(code) {
 
 			// Default close cb
 			options.cbClose(code)
@@ -40,8 +40,7 @@ module.exports = function(userOptions){
 				stopCb(code);
 
 			// Auto-restarting ?
-			if (stopOrder == false && options.autoRestart == true)
-			{
+			if (stopOrder == false && options.autoRestart == true) {
 				// AutoRestart CB
 				options.cbRestart(code)
 				setTimeout(obj.start, options.restartTimeout)
@@ -55,19 +54,22 @@ module.exports = function(userOptions){
 
 	obj.stop = function(cb, termSignal) {
 		stopOrder = true
-		stopCb = cb || function(){}
-	  process.kill(termSignal || 'SIGTERM')
-	}	
+		stopCb = cb || function() {}
+		process.kill(termSignal || 'SIGTERM')
+	}
 
 	obj.restart = function(cb, termSignal) {
 		// Stop
-		obj.stop(function(){
+		obj.stop(function() {
 
 			// Wait and start again
-			setTimeout( function(){ obj.start(); if (cb) cb(); }, options.restartTimeout);
+			setTimeout(function() {
+				obj.start();
+				if (cb) cb();
+			}, options.restartTimeout);
 
 		}, termSignal);
-	}	
+	}
 
 	return obj;
 }
