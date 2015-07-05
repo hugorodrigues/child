@@ -53,12 +53,12 @@ apacheTail.restart(function(code){ console.log('apacheTail has restarted') })
 
 
 ---
-## License 
+## License
 
 (The MIT License)
 
-Copyright (c) 2010-2013 Hugo Rodrigues, StartEffect U. Lda
-http://starteffect.com
+Copyright (c) 2010-2015 Hugo Rodrigues
+https://hugorodrigues.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

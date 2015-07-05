@@ -1,6 +1,6 @@
 {
   "name": "child",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "child.js",
   "description": "Minimalistic nodejs process manager. Similar to forever-monitor",
 
@@ -18,7 +18,7 @@
     "spawn",
     "processes"
   ],
-  
+
   "author": "Hugo Rodrigues",
   "license": "MIT"
 }
