@@ -15,15 +15,29 @@ module.exports = function(userOptions) {
 
 		cbRestart: userOptions.cbRestart || function(data) {},
 
+		cbMessage: userOptions.cbMessage || function(message) {},
+
 		cbStdout: userOptions.cbStdout || null,
 		cbStderr: userOptions.cbStderr || null,
-		cbClose: userOptions.cbClose || function(data) {},
+		cbClose: userOptions.cbClose || function(data) {}
 	}
 
-	obj.start = function(cb) {
-		stopOrder = false;
+	obj.spawn = function(cb) {
 		process = require('child_process').spawn(options.command, options.args, options.options);
+		goon(cb);
+	}
 
+	obj.fork = function(cb) {
+		process = require('child_process').fork(options.command, options.args, options.options);
+		goon(cb);
+
+		process.on('message', function(message) {
+			options.cbMessage(message);
+		})
+	}
+
+	function goon(cb) {
+		stopOrder = false;
 		if (options.cbStdout)
 			process.stdout.on('data', options.cbStdout)
 
@@ -31,7 +45,6 @@ module.exports = function(userOptions) {
 			process.stderr.on('data', options.cbStderr)
 
 		process.on('close', function(code) {
-
 			// Default close cb
 			options.cbClose(code)
 
@@ -49,7 +62,10 @@ module.exports = function(userOptions) {
 
 		if (cb)
 			cb(process.pid)
+	};
 
+	obj.send = function(message) {
+		process.send(message);
 	}
 
 	obj.stop = function(cb, termSignal) {
