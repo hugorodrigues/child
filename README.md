@@ -5,7 +5,7 @@ Minimalistic nodejs process manager.
 
 
 ## Main Features
-- Simple & Lightweight (70 LOC)
+- Simple & Lightweight (90 LOC)
 - No dependencies
 
 
@@ -36,9 +36,16 @@ var apacheTail = require('child')({
 })
 ```
 
-### .start(callback)
+### .spawn(callback)
+to spawn a new child
 ```js
-apacheTail.start(function(pid){ console.log('apacheTail is now up with pid: '+ pid) })
+apacheTail.spawn(function(pid){ console.log('apacheTail is now up with pid: '+ pid) })
+```
+
+### .fork(callback)
+to fork a new child
+```js
+apacheTail.fork(function(pid){ console.log('apacheTail is now up with pid: '+ pid) })
 ```
 
 ### .stop(callback, termSignal)
@@ -51,6 +58,24 @@ apacheTail.stop(function(code){ console.log('apacheTail is now stopped') })
 apacheTail.restart(function(code){ console.log('apacheTail has restarted') })
 ```
 
+### .send(callback)
+to send messages to child via ipc
+```js
+apacheTail.send('apacheTail are you running?')
+```
+
+### Get messages from child
+to get messages from child via ipc
+```js
+var apacheTail = require('child')({
+	// Command to execute
+	command: './apacheTail.js',
+	// [Optional] Get message from child
+	cbMessage: function(message) {
+		console.log(message); //Up and running, boss. 
+	}
+})
+```
 
 ---
 ## License
